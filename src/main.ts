@@ -2,14 +2,9 @@ import 'zone.js/dist/zone';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { bootstrapApplication } from '@angular/platform-browser';
-import {
-  FormArray,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormArray, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'my-app',
@@ -17,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   template: `
   <div class="container mt-5 border rounded p-0">
-  <h1 class="bg-light text-center p-2">SMS TEMPLATE ENGINE</h1>
+  <h1 class="bg-light text-center p-2">ANGULAR TEMPLATE EDITOR</h1>
   <div class="row p-3">
     <div class="col-md-4">
       <h3>Template</h3>
