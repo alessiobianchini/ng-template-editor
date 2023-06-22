@@ -16,7 +16,7 @@ import { FormBuilder } from '@angular/forms';
   <div class="row p-3">
     <div class="col-md-4">
       <h3>Template</h3>
-      <div>{{template}}<div>
+      <textarea [(ngModel)]='template' (ngModelChange)="updateText()" rows="5" cols="120"></textarea>
     </div>
     <div class="col-md-4">
       <h3>Preview</h3>
