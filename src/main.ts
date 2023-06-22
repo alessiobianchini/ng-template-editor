@@ -101,7 +101,7 @@ export class App {
         this.placeholderKeyRegex,
         (match: any, field: any) => {
           var index = this.fieldsAvailable.findIndex((f) => f.key == field);
-          const ex = this.placeholderArray.at(index);
+          const ex = index > -1 ? this.placeholderArray.at(index) : null;
           if (ex) {
             return ex.value;
           }
