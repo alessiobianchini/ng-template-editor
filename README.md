@@ -1,3 +1,3 @@
 # ng-template-editor
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/stackblitz-starters-fqa4bj)
+[Live demo ⚡️](https://stackblitz-starters-fqa4bj.stackblitz.io)
