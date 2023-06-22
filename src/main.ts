@@ -23,16 +23,6 @@ import { FormBuilder } from '@angular/forms';
       <div class="preview bg-light rounded border p-2" [innerText]="outputText"></div>
     </div>
     <div class="col-md-4">
-      <h3>Found keys</h3>
-      <ng-container *ngFor="let key of templateKeys">
-        <div>{{key}}</div> 
-      </ng-container>
-    </div>
-    <!--<div class="col-md-4">
-      <h3>Values</h3>
-      <pre>{{fieldsAvailable | json}}</pre>
-    </div>-->
-    <div class="col-md-4">
       <h3>Parameters editor</h3>
       <form [formGroup]="editorData">
         <div formArrayName="placeholders" 
@@ -43,9 +33,13 @@ import { FormBuilder } from '@angular/forms';
 
             <label [for]="arrayItem.key" class="array-item-title">
               {{arrayItem.key}}</label>
-        
         </div>
       </form>
+    </div>
+    <div class="col-md-4">
+      <h3>Add parameter</h3>
+      <input #param/>
+      <button (click)="addParameter(param.value)" >Add</button>
     </div>
   </div>
 </div>
@@ -55,7 +49,6 @@ import { FormBuilder } from '@angular/forms';
 export class App {
   outputText: string = '';
   template: string = 'Hello #user_name#, email: #user_email#';
-  templateKeys: any[] = [];
   editorData: any;
   placeholderKeyRegex = /\#(.*?)\#/g; // /{{([^}]*)}}/g;
   fieldsAvailable = [
@@ -83,16 +76,21 @@ export class App {
   extractKeys() {
     var temp = this.template.match(this.placeholderKeyRegex);
     if (temp) {
-      this.templateKeys = temp.map((m) => m.substring(1, m.length - 1));
-      console.log(this.templateKeys);
-
       this.fieldsAvailable.forEach((stack, index) => {
         this.placeholderArray.push(this._formBuilder.control(stack.value));
       });
     }
   }
   getControl(index: number) {
+    let array = this.editorData.get('placeholders') as FormArray;
+    if (index >= array.length) {
+      this.placeholderArray.push(this._formBuilder.control(''));
+    }
     return (this.editorData.get('placeholders') as FormArray).at(index);
+  }
+  addParameter(key: string) {
+    console.log(key);
+    this.fieldsAvailable.push({ key: key, value: '' });
   }
   get placeholderArray() {
     return this.editorData.get('placeholders') as FormArray;
@@ -102,10 +100,7 @@ export class App {
       this.outputText = this.template.replace(
         this.placeholderKeyRegex,
         (match: any, field: any) => {
-          console.log('Match > ' + match);
-          console.log('Field > ' + field);
           var index = this.fieldsAvailable.findIndex((f) => f.key == field);
-          console.log(index);
           const ex = this.placeholderArray.at(index);
           if (ex) {
             return ex.value;
